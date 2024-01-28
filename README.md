@@ -1,4 +1,4 @@
-# dotfile
+# README
 The Repo is for saving my local configurations for zsh, tmux and some plugins.
 
 ***zsh***
@@ -12,10 +12,10 @@ The Repo is for saving my local configurations for zsh, tmux and some plugins.
   ~~~
   * Following Plugins are installed
     * git plugin
-	  * brew
-	  * npm
-	  * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
-	  * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md)
+    * brew
+    * npm
+    * [zsh-syntax-highlighting](https://github.com/zsh-users/zsh-syntax-highlighting/blob/master/INSTALL.md)
+    * [zsh-autosuggestions](https://github.com/zsh-users/zsh-autosuggestions/blob/master/INSTALL.md)
 
 ***yabai and skhd***
 * Please refer to the [yabai](https://github.com/koekeishiya/yabai) and [skhd](https://github.com/koekeishiya/skhd) pagefor installation
