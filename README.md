@@ -1,6 +1,25 @@
 # README
 The Repo is for saving my local configurations for zsh, tmux and some plugins.
 
+For Setup new machine/laptop, run following code:
+
+~~~ bash
+git clone --bare https://bitbucket.org/durdn/cfg.git $HOME/.cfg
+function config {
+   /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
+}
+mkdir -p .config-backup
+config checkout
+if [ $? = 0 ]; then
+  echo "Checked out config.";
+  else
+    echo "Backing up pre-existing dot files.";
+    config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+fi;
+config checkout
+config config status.showUntrackedFiles no
+~~~
+
 ***zsh***
 * oh-my-zsh is used, which can be installed using following script
 ~~~ bash
