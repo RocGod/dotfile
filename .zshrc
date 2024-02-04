@@ -23,6 +23,9 @@ bldgrn='\e[1;32m' # Bold Green
 bldpur='\e[1;35m' # Bold Purple
 txtrst='\e[0m'    # Text Reset
 
+alias config='/opt/homebrew/bin/git --git-dir=/Users/rocwang/dotfile/.git/ --work-tree=/Users/rocwang'
+config config --local status.showUntrackedFiles no
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -47,7 +50,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 
 # Uncomment one of the following lines to change the auto-update behavior
 # zstyle ':omz:update' mode disabled  # disable automatic updates
-# zstyle ':omz:update' mode auto      # update automatically without asking
+zstyle ':omz:update' mode auto      # update automatically without asking
 # zstyle ':omz:update' mode reminder  # just remind me to update when it's time
 
 # Uncomment the following line to change how often to auto-update (in days).
@@ -63,7 +66,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # DISABLE_AUTO_TITLE="true"
 
 # Uncomment the following line to enable command auto-correction.
-# ENABLE_CORRECTION="true"
+ENABLE_CORRECTION="true"
 
 # Uncomment the following line to display red dots whilst waiting for completion.
 # You can also set it to another string to have that shown instead of the default red dots.
@@ -147,13 +150,13 @@ fi
 test -e "${HOME}/.iterm2_shell_integration.zsh" && source "${HOME}/.iterm2_shell_integration.zsh"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# ----------------------
-# Docker
-# ----------------------
-export PATH=$PATH:~/.docker/bin
-
-
 # Start neofetch
 neofetch
 
+# -----------------------
+# Ruby for Colorls
+# -----------------------
+export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+source $(dirname $(gem which colorls))/tab_complete.sh
+alias ls='colorls -lA --gs'
 
