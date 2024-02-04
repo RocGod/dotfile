@@ -23,9 +23,6 @@ bldgrn='\e[1;32m' # Bold Green
 bldpur='\e[1;35m' # Bold Purple
 txtrst='\e[0m'    # Text Reset
 
-alias config='/opt/homebrew/bin/git --git-dir=/Users/rocwang/dotfile/.git/ --work-tree=/Users/rocwang'
-config config --local status.showUntrackedFiles no
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -160,3 +157,5 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 source $(dirname $(gem which colorls))/tab_complete.sh
 alias ls='colorls -lA --gs'
 
+alias config='/opt/homebrew/bin/git --git-dir=$HOME/.cfg/ --work-tree=/Users/rocwang'
+config config --local status.showUntrackedFiles no
