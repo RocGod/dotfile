@@ -11,17 +11,6 @@ HOST_NAME=RocKing
 
 source ~/.nvm/nvm.sh
 nvm use default
-export HISTSIZE=5000
-export HISTFILESIZE=10000
-
-export CLICOLOR=1
-export LSCOLORS=GxFxCxDxBxegedabagaced
-
-txtred='\e[0;31m' # Red
-txtgrn='\e[0;32m' # Green
-bldgrn='\e[1;32m' # Bold Green
-bldpur='\e[1;35m' # Bold Purple
-txtrst='\e[0m'    # Text Reset
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
