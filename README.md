@@ -1,10 +1,10 @@
 # README
 The Repo is for saving my local configurations for zsh, tmux and some plugins.
 
-For Setup new machine/laptop, run following code:
+For Setup new machine/laptop, run following code (credit to [dotfiles](https://www.atlassian.com/git/tutorials/dotfiles)):
 
 ~~~ bash
-git clone --bare https://bitbucket.org/durdn/cfg.git $HOME/.cfg
+git clone --bare https://github.com/RocGod/dotfile.git $HOME/.cfg
 function config {
    /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
 }
