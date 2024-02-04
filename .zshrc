@@ -26,6 +26,9 @@ txtrst='\e[0m'    # Text Reset
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
+alias config='/opt/homebrew/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME'
+config config --local status.showUntrackedFiles no
+
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
@@ -157,5 +160,4 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 source $(dirname $(gem which colorls))/tab_complete.sh
 alias ls='colorls -lA --gs'
 
-alias config='/opt/homebrew/bin/git --git-dir=$HOME/.cfg/ --work-tree=/Users/rocwang'
-config config --local status.showUntrackedFiles no
+
