@@ -17,8 +17,7 @@ sketchybar --bar color=$BAR_COLOR \
   margin=0 \
   y_offset=0 \
   padding_left=10 \
-  padding_right=10 \
-  topmost=on
+  padding_right=10 
 
 ##### Changing Defaults #####
 # We now change some default values that are applied to all further items
