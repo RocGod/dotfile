@@ -1,66 +1,44 @@
-#!/bin/zsh
+#!/bin/bash
 
-sketchybar --add item command.logo left \
-  --set command.logo background.color=$COLOR_GREEN \
-  background.border_width=0 \
-  background.corner_radius=6 \
-  background.height=24 \
-  icon=$ICON_CMD \
-  icon.highlight=on \
-  icon.padding_left=4 \
-  icon.padding_right=4 \
-  label.drawing=off \
-  click_script="sketchybar -m --set \$NAME popup.drawing=toggle" \
-  popup.height=32 \
-  popup.background.color=$BAR_COLOR \
-  popup.background.border_width=2 \
-  popup.background.corner_radius=12 \
-  popup.background.border_color=$COLOR_GREEN \
-  \
-  --add item command.preferences popup.command.logo \
-  --set command.preferences icon=$ICON_COG \
-  icon.color=$COLOR_GREEN \
-  icon.padding_left=4 \
-  icon.padding_right=2 \
-  label="Settings" \
-  label.color=$COLOR_GREEN \
-  label.padding_left=2 \
-  label.padding_right=4 \
-  click_script="open -a 'System Preferences';
+POPUP_OFF='sketchybar --set apple.logo popup.drawing=off'
+POPUP_CLICK_SCRIPT='sketchybar --set $NAME popup.drawing=toggle'
 
-sketchybar -m --set command.logo popup.drawing=off" \
-  --add item command.activity popup.command.logo \
-  --set command.activity icon=$ICON_CHART \
-  icon.color=$COLOR_GREEN \
-  icon.padding_left=4 \
-  icon.padding_right=2 \
-  label="Activity Monitor" \
-  label.color=$COLOR_GREEN \
-  label.padding_left=2 \
-  label.padding_right=4 \
-  click_script="open -a 'Activity Monitor';
-
-sketchybar -m --set command.logo popup.drawing=off" \
-  --add item command.lock popup.command.logo \
-  --set command.lock icon=$ICON_LOCK \
-  icon.color=$COLOR_GREEN \
-  icon.padding_left=4 \
-  icon.padding_right=2 \
-  label="Lock Screen" \
-  label.color=$COLOR_GREEN \
-  label.padding_left=2 \
-  label.padding_right=4 \
-  click_script="pmset displaysleepnow;
-
-sketchybar -m --set command.logo popup.drawing=off"
-
-sketchybar --add bracket cmd command.logo \
-  --set cmd background.color=$BAR_COLOR \
-  background.border_color=$COLOR_GREEN
-
-sketchybar --add item seperator.l1 left \
-  --set seperator.l1 padding_left=4 \
-  padding_right=4 \
-  background.drawing=off \
-  icon.drawing=off \
+apple_logo=(
+  icon=$APPLE
+  icon.font="$FONT:Black:16.0"
+  icon.color=$GREEN
+  padding_right=15
   label.drawing=off
+  click_script="$POPUP_CLICK_SCRIPT"
+  popup.height=35
+)
+
+apple_prefs=(
+  icon=$PREFERENCES
+  label="Preferences"
+  click_script="open -a 'System Preferences'; $POPUP_OFF"
+)
+
+apple_activity=(
+  icon=$ACTIVITY
+  label="Activity"
+  click_script="open -a 'Activity Monitor'; $POPUP_OFF"
+)
+
+apple_lock=(
+  icon=$LOCK
+  label="Lock Screen"
+  click_script="pmset displaysleepnow; $POPUP_OFF"
+)
+
+sketchybar --add item apple.logo left                  \
+           --set apple.logo "${apple_logo[@]}"         \
+                                                       \
+           --add item apple.prefs popup.apple.logo     \
+           --set apple.prefs "${apple_prefs[@]}"       \
+                                                       \
+           --add item apple.activity popup.apple.logo  \
+           --set apple.activity "${apple_activity[@]}" \
+                                                       \
+           --add item apple.lock popup.apple.logo      \
+           --set apple.lock "${apple_lock[@]}"

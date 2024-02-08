@@ -1,82 +1,91 @@
-sketchybar -m --add event window_focus \
-  --add event title_change
-source "$CONFIG_DIR/colors.sh"
-source "$CONFIG_DIR/icons.sh"
+#!/bin/bash
 
-PLUGIN_DIR="$CONFIG_DIR/plugins"
-ITEM_DIR="$CONFIG_DIR/items"
-##### Bar Appearance #####
-# Configuring the general appearance of the bar, these are only some of the
-# options available. For all options see:
-# https://felixkratz.github.io/SketchyBar/config/bar
-# If you are looking for other colors, see the color picker:
-# https://felixkratz.github.io/SketchyBar/config/tricks#color-picker
+source "$CONFIG_DIR/colors.sh" # Loads all defined colors
+source "$CONFIG_DIR/icons.sh" # Loads all defined icons
 
-sketchybar --bar color=$BAR_COLOR \
-  height=42 \
-  margin=0 \
-  y_offset=0 \
-  padding_left=10 \
-  padding_right=10 
+ITEM_DIR="$CONFIG_DIR/items" # Directory where the items are configured
+PLUGIN_DIR="$CONFIG_DIR/plugins" # Directory where all the plugin scripts are stored
 
-##### Changing Defaults #####
-# We now change some default values that are applied to all further items
-# For a full list of all available item properties see:
-# https://felixkratz.github.io/SketchyBar/config/items
+FONT="CaskaydiaCove Nerd Font" # Needs to have Regular, Bold, Semibold, Heavy and Black variants
+PADDINGS=3 # All paddings use this value (icon, label, background)
 
-sketchybar --default padding_left=8 \
-  padding_right=8 \
-  \
-  background.border_color=$COLOR_YELLOW \
-  background.border_width=2 \
-  background.height=40 \
-  background.corner_radius=12 \
-  \
-  icon.color=$COLOR_YELLOW \
-  icon.highlight_color=$COLOR_BACKGROUND \
-  icon.padding_left=6 \
-  icon.padding_right=2 \
-  icon.font="CaskaydiaCove Nerd Font:Regular:16.0" \
-  \
-  label.color=$COLOR_YELLOW \
-  label.highlight_color=$COLOR_BACKGROUND \
-  label.padding_left=2 \
-  label.padding_right=6 \
-  label.font="CaskaydiaCove Nerd Font:Regular:16.0"
+# Setting up and starting the helper process
+HELPER=git.felix.helper
+killall helper
+(cd $CONFIG_DIR/helper && make)
+$CONFIG_DIR/helper/helper $HELPER > /dev/null 2>&1 &
 
-##### Adding Menu #####
+# Unload the macOS on screen indicator overlay for volume change
+launchctl unload -F /System/Library/LaunchAgents/com.apple.OSDUIHelper.plist > /dev/null 2>&1 &
 
-source $ITEM_DIR/apple.sh
+# Setting up the general bar appearance of the bar
+bar=(
+  height=45
+  color=$BAR_COLOR
+  border_width=2
+  border_color=$BAR_BORDER_COLOR
+  shadow=off
+  position=top
+  sticky=on
+  padding_right=10
+  padding_left=10
+  y_offset=-5
+  margin=-2
+  topmost=window
+)
 
-##### Adding Mission Control Space Indicators #####
-# Now we add some mission control spaces:
-# https://felixkratz.github.io/SketchyBar/config/components#space----associate-mission-control-spaces-with-an-item
-# to indicate active and available mission control spaces
-source $ITEM_DIR/spaces.sh
-source $ITEM_DIR/front_app.sh
+sketchybar --bar "${bar[@]}"
 
-##### Adding Left Items #####
-# We add some regular items to the left side of the bar
-# only the properties deviating from the current defaults need to be set
+# Setting up default values
+defaults=(
+  updates=when_shown
+  icon.font="$FONT:Bold:15.0"
+  icon.color=$ICON_COLOR
+  icon.padding_left=$PADDINGS
+  icon.padding_right=$PADDINGS
+  label.font="$FONT:Semibold:14.0"
+  label.color=$LABEL_COLOR
+  label.padding_left=$PADDINGS
+  label.padding_right=$PADDINGS
+  padding_right=$PADDINGS
+  padding_left=$PADDINGS
+  background.height=26
+  background.corner_radius=9
+  background.border_width=2
+  popup.background.border_width=2
+  popup.background.corner_radius=9
+  popup.background.border_color=$POPUP_BORDER_COLOR
+  popup.background.color=$POPUP_BACKGROUND_COLOR
+  popup.blur_radius=20
+  popup.background.shadow.drawing=on
+  scroll_texts=on
+)
 
-source $ITEM_DIR/window_title.sh
+sketchybar --default "${defaults[@]}"
 
-##### Adding Right Items #####
-# In the same way as the left items we can add items to the right side.
-# Additional position (e.g. center) are available, see:
-# https://felixkratz.github.io/SketchyBar/config/items#adding-items-to-sketchybar
+# Left
+source "$ITEM_DIR/apple.sh"
+source "$ITEM_DIR/spaces.sh"
+source "$ITEM_DIR/yabai.sh"
+source "$ITEM_DIR/front_app.sh"
 
-# Some items refresh on a fixed cycle, e.g. the clock runs its script once
-# every 10s. Other items respond to events they subscribe to, e.g. the
-# volume.sh script is only executed once an actual change in system audio
-# volume is registered. More info about the event system can be found here:
-# https://felixkratz.github.io/SketchyBar/config/events
+# Center
+source "$ITEM_DIR/spotify.sh"
+# source "$ITEM_DIR/media.sh"
 
-source $ITEM_DIR/time_date.sh
-source $ITEM_DIR/ip_volume_battery.sh
+# Right
+source "$ITEM_DIR/calendar.sh"
+source "$ITEM_DIR/brew.sh"
+source "$ITEM_DIR/github.sh"
+source "$ITEM_DIR/wifi.sh"
+source "$ITEM_DIR/battery.sh"
+source "$ITEM_DIR/volume.sh"
+source "$ITEM_DIR/cpu.sh"
+source "$ITEM_DIR/svim.sh"
 
-##### Finalizing Setup #####
-# The below command is only needed at the end of the initial configuration to
-# force all scripts to run the first time, it should never be run in an item script.
+sketchybar --hotload on
 
+# Forcing all item scripts to run (never do this outside of sketchybarrc)
 sketchybar --update
+
+echo "sketchybar configuation loaded.."
