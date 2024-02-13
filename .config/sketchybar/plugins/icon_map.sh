@@ -317,7 +317,7 @@ function icon_map() {
   "Arc")
     icon_result=":arc:"
     ;;
-  "Chromium" | "Google Chrome" | "Google Chrome Canary")
+  "Chromium" | "Google Chrome" | "Google Chrome Canary" | "Thorium")
     icon_result=":google_chrome:"
     ;;
   "Jellyfin Media Player")
@@ -434,7 +434,7 @@ function icon_map() {
   "Tweetbot" | "Twitter")
     icon_result=":twitter:"
     ;;
-  "Microsoft Teams")
+  "Microsoft Teams" | "Microsoft Teams (work or school)")
     icon_result=":microsoft_teams:"
     ;;
   "Yuque" | "语雀")
