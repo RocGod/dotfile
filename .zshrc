@@ -158,4 +158,5 @@ export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
 source $(dirname $(gem which colorls))/tab_complete.sh
 alias ls='colorls -lA --gs'
 
-
+eval "$(zoxide init zsh)"
+alias cd='z'

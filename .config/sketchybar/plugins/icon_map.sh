@@ -242,7 +242,7 @@ function icon_map() {
   "PyCharm")
     icon_result=":pycharm:"
     ;;
-  "Canary Mail" | "HEY" | "Mail" | "Mailspring" | "MailMate" | "邮件")
+  "Canary Mail" | "HEY" | "Mail" | "Mailspring" | "MailMate" | "邮件" | "Outlook (PWA)")
     icon_result=":mail:"
     ;;
   "Default")
