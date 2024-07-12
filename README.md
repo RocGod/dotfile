@@ -1,31 +1,32 @@
 # README
 The Repo is for saving my local configurations for zsh, tmux and some plugins.
 
-For Setup new machine/laptop, run following code (credit to [dotfiles](https://www.atlassian.com/git/tutorials/dotfiles)):
+For Setup new machine/laptop, run following code:
 
+## Requirements
+
+***Homebrew***
 ~~~ bash
-git clone --bare https://github.com/RocGod/dotfile.git $HOME/.cfg
-function config {
-   /usr/bin/git --git-dir=$HOME/.cfg/ --work-tree=$HOME $@
-}
-mkdir -p .config-backup
-config checkout
-if [ $? = 0 ]; then
-  echo "Checked out config.";
-  else
-    echo "Backing up pre-existing dot files.";
-    config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
-fi;
-config checkout
-config config status.showUntrackedFiles no
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
 ~~~
+
+***Git***
+  ~~~ bash
+    brew install git
+  ~~~
+
+***Stow***
+  ~~~ bash
+    brew install stow
+  ~~~
 
 ***zsh***
-* oh-my-zsh is used, which can be installed using following script
-~~~ bash
-    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
-~~~
-  * <b>powerlevel10k</b> is using for Theme, whihc can be installed using following script
+
+  * **oh-my-zsh** is used, which can be installed using following script
+  ~~~ bash
+      sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
+  ~~~ 
+  * **powerlevel10k** is using for Theme, which can be installed using following script
   ~~~ bash
       git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
   ~~~
@@ -44,3 +45,13 @@ config config status.showUntrackedFiles no
 * Please refer to the [sketchybar](https://github.com/FelixKratz/SketchyBar) and [borders](https://github.com/FelixKratz/JankyBorders) page for installation
 * Regarding my sketcybar config setuo, I create the config files based on the config file created by @FelixKratz and @hbthen3rd. Thank you for the sharing!
 
+#### Setup Local Config files
+* First, check out the dotfiles repo in your $HOME directory using git
+  ~~~ bash
+    git clone git@github.com:RocGod/dotfile.git
+    cd dotfile
+  ~~~
+* then use GNU stow to create symlinks
+  ~~~ bash
+    stow .
+  ~~~
