@@ -1,10 +1,10 @@
 #!/bin/bash
 
-SPOTIFY_EVENT="com.spotify.client.PlaybackStateChanged"
-POPUP_SCRIPT="sketchybar -m --set spotify.anchor popup.drawing=toggle"
+SPOTIFY_EVENT="com.spotube.client.PlaybackStateChanged"
+POPUP_SCRIPT="sketchybar -m --set spotube.anchor popup.drawing=toggle"
 
 spotify_anchor=(
-  script="$PLUGIN_DIR/spotify.sh"
+  script="$PLUGIN_DIR/spotube.sh"
   click_script="$POPUP_SCRIPT"
   popup.horizontal=on
   popup.align=center
@@ -17,7 +17,7 @@ spotify_anchor=(
 )
 
 spotify_cover=(
-  script="$PLUGIN_DIR/spotify.sh"
+  script="$PLUGIN_DIR/spotube.sh"
   click_script="open -a 'Spotify'; $POPUP_SCRIPT"
   label.drawing=off
   icon.drawing=off
@@ -77,7 +77,7 @@ spotify_state=(
   slider.highlight_color=$GREEN
   slider.percentage=40
   slider.width=115
-  script="$PLUGIN_DIR/spotify.sh"
+  script="$PLUGIN_DIR/spotube.sh"
   update_freq=1
   updates=when_shown
 )
@@ -89,7 +89,7 @@ spotify_shuffle=(
   icon.color=$BLACK
   icon.highlight_color=$GREY
   label.drawing=off
-  script="$PLUGIN_DIR/spotify.sh"
+  script="$PLUGIN_DIR/spotube.sh"
   y_offset=-45
 )
 
@@ -98,7 +98,7 @@ spotify_back=(
   icon.padding_left=5
   icon.padding_right=5
   icon.color=$BLACK
-  script="$PLUGIN_DIR/spotify.sh"
+  script="$PLUGIN_DIR/spotube.sh"
   label.drawing=off
   y_offset=-45
 )
@@ -117,7 +117,7 @@ spotify_play=(
   icon.padding_right=5
   updates=on
   label.drawing=off
-  script="$PLUGIN_DIR/spotify.sh"
+  script="$PLUGIN_DIR/spotube.sh"
   y_offset=-45
 )
 
@@ -127,7 +127,7 @@ spotify_next=(
   icon.padding_right=5
   icon.color=$BLACK
   label.drawing=off
-  script="$PLUGIN_DIR/spotify.sh"
+  script="$PLUGIN_DIR/spotube.sh"
   y_offset=-45
 )
 
@@ -138,7 +138,7 @@ spotify_repeat=(
   icon.padding_right=10
   icon.color=$BLACK
   label.drawing=off
-  script="$PLUGIN_DIR/spotify.sh"
+  script="$PLUGIN_DIR/spotube.sh"
   y_offset=-45
 )
 
@@ -150,53 +150,53 @@ spotify_controls=(
 )
 
 sketchybar --add event spotify_change $SPOTIFY_EVENT             \
-           --add item spotify.anchor center                      \
-           --set spotify.anchor "${spotify_anchor[@]}"           \
-           --subscribe spotify.anchor mouse.entered mouse.exited \
+           --add item spotube.anchor center                      \
+           --set spotube.anchor "${spotify_anchor[@]}"           \
+           --subscribe spotube.anchor mouse.entered mouse.exited \
                                       mouse.exited.global        \
                                                                  \
-           --add item spotify.cover popup.spotify.anchor         \
-           --set spotify.cover "${spotify_cover[@]}"             \
+           --add item spotube.cover popup.spotube.anchor         \
+           --set spotube.cover "${spotify_cover[@]}"             \
                                                                  \
-           --add item spotify.title popup.spotify.anchor         \
-           --set spotify.title "${spotify_title[@]}"             \
+           --add item spotube.title popup.spotube.anchor         \
+           --set spotube.title "${spotify_title[@]}"             \
                                                                  \
-           --add item spotify.artist popup.spotify.anchor        \
-           --set spotify.artist "${spotify_artist[@]}"           \
+           --add item spotube.artist popup.spotube.anchor        \
+           --set spotube.artist "${spotify_artist[@]}"           \
                                                                  \
-           --add item spotify.album popup.spotify.anchor         \
-           --set spotify.album "${spotify_album[@]}"             \
+           --add item spotube.album popup.spotube.anchor         \
+           --set spotube.album "${spotify_album[@]}"             \
                                                                  \
-           --add slider spotify.state popup.spotify.anchor       \
-           --set spotify.state "${spotify_state[@]}"             \
-           --subscribe spotify.state mouse.clicked               \
+           --add slider spotube.state popup.spotube.anchor       \
+           --set spotube.state "${spotify_state[@]}"             \
+           --subscribe spotube.state mouse.clicked               \
                                                                  \
-           --add item spotify.shuffle popup.spotify.anchor       \
-           --set spotify.shuffle "${spotify_shuffle[@]}"         \
-           --subscribe spotify.shuffle mouse.clicked             \
+           --add item spotube.shuffle popup.spotube.anchor       \
+           --set spotube.shuffle "${spotify_shuffle[@]}"         \
+           --subscribe spotube.shuffle mouse.clicked             \
                                                                  \
-           --add item spotify.back popup.spotify.anchor          \
-           --set spotify.back "${spotify_back[@]}"               \
-           --subscribe spotify.back mouse.clicked                \
+           --add item spotube.back popup.spotube.anchor          \
+           --set spotube.back "${spotify_back[@]}"               \
+           --subscribe spotube.back mouse.clicked                \
                                                                  \
-           --add item spotify.play popup.spotify.anchor          \
-           --set spotify.play "${spotify_play[@]}"               \
-           --subscribe spotify.play mouse.clicked spotify_change \
+           --add item spotube.play popup.spotube.anchor          \
+           --set spotube.play "${spotify_play[@]}"               \
+           --subscribe spotube.play mouse.clicked spotify_change \
                                                                  \
-           --add item spotify.next popup.spotify.anchor          \
-           --set spotify.next "${spotify_next[@]}"               \
-           --subscribe spotify.next mouse.clicked                \
+           --add item spotube.next popup.spotube.anchor          \
+           --set spotube.next "${spotify_next[@]}"               \
+           --subscribe spotube.next mouse.clicked                \
                                                                  \
-           --add item spotify.repeat popup.spotify.anchor        \
-           --set spotify.repeat "${spotify_repeat[@]}"           \
-           --subscribe spotify.repeat  mouse.clicked             \
+           --add item spotube.repeat popup.spotube.anchor        \
+           --set spotube.repeat "${spotify_repeat[@]}"           \
+           --subscribe spotube.repeat  mouse.clicked             \
                                                                  \
-           --add item spotify.spacer popup.spotify.anchor        \
-           --set spotify.spacer width=5                          \
+           --add item spotube.spacer popup.spotube.anchor        \
+           --set spotube.spacer width=5                          \
                                                                  \
-           --add bracket spotify.controls spotify.shuffle        \
-                                          spotify.back           \
-                                          spotify.play           \
-                                          spotify.next           \
-                                          spotify.repeat         \
-           --set spotify.controls "${spotify_controls[@]}"       \
+           --add bracket spotube.controls spotube.shuffle        \
+                                          spotube.back           \
+                                          spotube.play           \
+                                          spotube.next           \
+                                          spotube.repeat         \
+           --set spotube.controls "${spotify_controls[@]}"       \
