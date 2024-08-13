@@ -18,7 +18,6 @@ plugins=(
   jenv
   mvn
   nvm
-  pyenv
   thefuck
   zoxide
   zsh-autosuggestions
@@ -42,13 +41,9 @@ function brew() {
     sketchybar --trigger brew_update
   fi
 }
-# ----------------------
-# Env Config 
-# ----------------------
-eval "$(jenv init -)"
 
 # ----------------------
-# Python Env
+# Pyenv Config
 # ----------------------
 export PYENV_ROOT="$HOME/.pyenv"
 export PATH="$PYENV_ROOT/bin:$PATH"
