@@ -54,7 +54,7 @@ fi
 # -----------------------------
 # ----- Bat (better cat) -----
 # -----------------------------
-export BAT_THEME=nord
+export BAT_THEME=Nord
 
 # ----------------------
 # eza --> (better ls)
