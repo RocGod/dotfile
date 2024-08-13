@@ -11,9 +11,16 @@ fi
 zstyle ':omz:update' mode auto  
 ENABLE_CORRECTION="true"
 
-plugins=(git
+plugins=(
 	brew
-	npm
+  fzf
+  git
+  jenv
+  mvn
+  nvm
+  pyenv
+  thefuck
+  zoxide
 )
 
 # Path to your oh-my-zsh installation.
@@ -26,13 +33,6 @@ alias edit-zsh="nvim ~/.zshrc"
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
-# ----------------------
-# nvm config
-# ----------------------
-export NVM_DIR="$HOME/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm 
-
 nvm use default
 
 # Sketchybar interactivity overloads
@@ -43,9 +43,8 @@ function brew() {
     sketchybar --trigger brew_update
   fi
 }
-
 # ----------------------
-# Java Env
+# Env Config 
 # ----------------------
 eval "$(jenv init -)"
 
@@ -71,37 +70,7 @@ alias ls='eza -la --all --icons=always'
 # ----------------------
 # z --> (better cd)
 # ----------------------
-eval "$(zoxide init zsh)"
 alias cd='z'
-
-# ----------------------
-# thefuck
-# ----------------------
-eval $(thefuck --alias)
-eval $(thefuck --alias fk)
-
-# ---- FZF -----
-
-# Set up fzf key bindings and fuzzy completion
-eval "$(fzf --zsh)"
-
-# -- Use fd instead of fzf --
-
-export FZF_DEFAULT_COMMAND="fd --hidden --strip-cwd-prefix --exclude .git"
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_ALT_C_COMMAND="fd --type=d --hidden --strip-cwd-prefix --exclude .git"
-
-# Use fd (https://github.com/sharkdp/fd) for listing path candidates.
-# - The first argument to the function ($1) is the base path to start traversal
-# - See the source code (completion.{bash,zsh}) for the details.
-_fzf_compgen_path() {
-  fd --hidden --exclude .git . "$1"
-}
-
-# Use fd to generate the list for directory completion
-_fzf_compgen_dir() {
-  fd --type=d --hidden --exclude .git . "$1"
-}
 
 # Start fast fetch
 fastfetch
