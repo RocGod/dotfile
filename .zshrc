@@ -21,6 +21,8 @@ plugins=(
   pyenv
   thefuck
   zoxide
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 # Path to your oh-my-zsh installation.
@@ -29,9 +31,6 @@ source $ZSH/oh-my-zsh.sh
 
 alias reload-zsh="source ~/.zshrc"
 alias edit-zsh="nvim ~/.zshrc"
-
-source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
 
 nvm use default
 
@@ -60,7 +59,7 @@ fi
 # -----------------------------
 # ----- Bat (better cat) -----
 # -----------------------------
-export BAT_THEME=tokyonight_night
+export BAT_THEME=nord
 
 # ----------------------
 # eza --> (better ls)
