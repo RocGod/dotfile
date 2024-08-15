@@ -26,9 +26,9 @@ For Setup new machine/laptop, run following code:
   ~~~ bash
       sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" 
   ~~~ 
-  * **powerlevel10k** is using for Theme, which can be installed using following script
+  * **oh my posh** is using for Theme, which can be installed using following script
   ~~~ bash
-      git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k"
+      brew install jandedobbeleer/oh-my-posh/oh-my-posh
   ~~~
   * Following Plugins are installed
     * git plugin
