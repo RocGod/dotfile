@@ -19,9 +19,11 @@ fi
 # Clone the dotfile repository
 echo "Cloning the dotfile repository..."
 git clone git@github.com:RocGod/dotfile.git
-cd dotfile
 
 # Install packages using Homebrew
 brew install jandedobbeleer/oh-my-posh/oh-my-posh fzf git jenv mvnvm nvm thefuck tmux zoxide stow zsh yabai skhd bat pyenv sketchybar borders btop
 
+cd dotfile
 stow .
+
+exec zsh

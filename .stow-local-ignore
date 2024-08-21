@@ -23,3 +23,4 @@ _darcs
 ^/COPYING
 
 .DS_Store
+install.sh
