@@ -10,6 +10,7 @@ if wezterm.config_builder then
   config = wezterm.config_builder()
 end
 -- This is where you actually apply your config choices
+config.automatically_reload_config = true
 config.color_scheme = "nord"
 config.font = wezterm.font("JetBrainsMono Nerd Font")
 config.font_size = 14
