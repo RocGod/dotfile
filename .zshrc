@@ -19,6 +19,7 @@ plugins=(
   mvn
   nvm
   thefuck
+  tmux
   zoxide
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -55,7 +56,7 @@ fi
 # ----- Bat (better cat) -----
 # -----------------------------
 export BAT_THEME=Nord
-
+alias fzf="fzf --preview 'bat --color=always --line-range=:500 {}'"
 # ----------------------
 # eza --> (better ls)
 # ----------------------
