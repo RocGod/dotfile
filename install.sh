@@ -38,7 +38,7 @@ git clone git@github.com:RocGod/dotfile.git
 brew tap FelixKratz/formulae
 
 # Install packages using Homebrew
-brew install font-jetbrains-mono-nerd-font jandedobbeleer/oh-my-posh/oh-my-posh fzf git jenv mvnvm nvm thefuck tmux zoxide stow zsh koekeishiya/formulae/yabai koekeishiya/formulae/skhd bat pyenv sketchybar borders btop eza fastfetch
+brew install font-jetbrains-mono-nerd-font jandedobbeleer/oh-my-posh/oh-my-posh fzf git jenv mvnvm nvm thefuck tmux zoxide stow zsh koekeishiya/formulae/yabai koekeishiya/formulae/skhd bat pyenv sketchybar borders btop eza fastfetch starship
 
 # Stow dotfiles
 cd dotfile
