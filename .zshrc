@@ -1,10 +1,14 @@
+# ----------------------
+# oh-my-posh config
+# ----------------------
 # Enable ohmyposh instant prompt. Should stay close to the top of ~/.zshrc.
 # Initialization code that may require console input (password prompts, [y/n]
 # confirmations, etc.) must go above this block; everything else may go below.
-eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/base.json)"
-if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
-  eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/base.json)"
-fi
+
+# eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/base.json)"
+# if [ "$TERM_PROGRAM" != "Apple_Terminal" ]; then
+#   eval "$(oh-my-posh init zsh --config ~/.config/ohmyposh/base.json)"
+# fi
 
 # ----------------------
 # oh-my-zsh config
@@ -13,6 +17,7 @@ zstyle ':omz:update' mode auto
 ENABLE_CORRECTION="true"
 
 plugins=(
+  starship
   brew
   fzf
   git
