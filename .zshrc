@@ -24,6 +24,7 @@ plugins=(
   jenv
   mvn
   nvm
+  pyenv
   thefuck
   tmux
   zoxide
