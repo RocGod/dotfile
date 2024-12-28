@@ -1,0 +1,4 @@
+theme = dark:nord, light:nord-light
+shell-integration = zsh
+font-family= "JetBrainsMono Nerd Font"
+font-size = 14
