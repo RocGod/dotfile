@@ -1,4 +1,6 @@
-theme = dark:nord, light:nord-light
+theme = dark:catppuccin-mocha, light:catppuccin-latte
 shell-integration = zsh
-font-family= "JetBrainsMono Nerd Font"
+font-family= JetBrainsMono Nerd Font
 font-size = 14
+gtk-titlebar = false
+background-opacity = 0.95

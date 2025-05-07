@@ -1,0 +1,8 @@
+l
+ls
+ls -la
+brew
+brew list
+ls
+cd ac-pss-pshp4
+exit
