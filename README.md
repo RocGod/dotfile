@@ -1,18 +1,67 @@
-# README
-The Repo is for saving my local configurations for setting up a new macOS.
+# Dotfiles for macOS
 
-For Setup new machine/laptop, run following code:
+This repository contains my personal configuration files and scripts for quickly setting up a new macOS machine.
 
-## Requirements
-Run the following script to install all the required packages and setup the local configurations.
-~~~ bash
-  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/RocGod/dotfile/main/install.sh)"
-~~~
+---
 
-***yabai and skhd***
-* Please refer to the [yabai](https://github.com/koekeishiya/yabai) and [skhd](https://github.com/koekeishiya/skhd) pagefor installation
-* Regarding my yabai config file, I am following the [tutorial](https://www.josean.com/posts/yabai-setup) done by @josean-dev. Thank you for the great video.
+## 🚀 Quick Start
 
-***sketchybar and borders***
-* Please refer to the [sketchybar](https://github.com/FelixKratz/SketchyBar) and [borders](https://github.com/FelixKratz/JankyBorders) page for installation
-* Regarding my sketcybar config setuo, I create the config files based on the config file created by @FelixKratz and @hbthen3rd. Thank you for the sharing!
+To set up your new Mac with all required packages and configurations, run:
+
+```bash
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/RocGod/dotfile/main/install.sh)"
+```
+
+---
+
+## 📦 What’s Included
+
+- **Shell:** [Oh My Zsh](https://ohmyz.sh/), plugins, and custom aliases
+- **Terminal Tools:** `bat`, `eza`, `fzf`, `starship`, `tmux`, `zoxide`, and more
+- **Development:** `git`, `jenv`, `nvm`, `mvn`, `uv`
+- **Window Management:** [yabai](https://github.com/koekeishiya/yabai), [skhd](https://github.com/koekeishiya/skhd), [sketchybar](https://github.com/FelixKratz/SketchyBar), [borders](https://github.com/FelixKratz/JankyBorders)
+- **Fonts:** JetBrains Mono Nerd Font
+- **Neovim:** Custom configuration in `.config/nvim`
+
+---
+
+## ⚠️ Notes & References
+
+### Yabai & skhd
+
+- Please refer to the [yabai documentation](https://github.com/koekeishiya/yabai) and [skhd documentation](https://github.com/koekeishiya/skhd) for installation steps and permissions.
+- My yabai config is based on [this tutorial](https://www.josean.com/posts/yabai-setup) by [@josean-dev](https://github.com/josean-dev).
+
+### Sketchybar & Borders
+
+- See [sketchybar](https://github.com/FelixKratz/SketchyBar) and [borders](https://github.com/FelixKratz/JankyBorders) for installation and usage.
+- My sketchybar config is inspired by [@FelixKratz](https://github.com/FelixKratz) and [@hbthen3rd](https://github.com/hbthen3rd).
+
+---
+
+## 🗂️ Structure
+
+```
+.
+├── .zshrc
+├── .tmux.conf
+├── install.sh
+├── .config/
+│   ├── nvim/
+│   ├── yabai/
+│   └── skhd/
+└── ...
+```
+
+---
+
+## 🙏 Credits
+
+- [@josean-dev](https://github.com/josean-dev) for the yabai setup guide
+- [@FelixKratz](https://github.com/FelixKratz) and [@hbthen3rd](https://github.com/hbthen3rd) for sketchybar and borders configs
+
+---
+
+## 📝 License
+
+Personal use only. Feel free to fork and adapt for your own
