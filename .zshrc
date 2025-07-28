@@ -24,9 +24,9 @@ plugins=(
   jenv
   mvn
   nvm
-  pyenv
   thefuck
   tmux
+  uv
   zoxide
   zsh-autosuggestions
   zsh-syntax-highlighting
@@ -46,15 +46,6 @@ function brew() {
   fi
 }
 
-# ----------------------
-# Pyenv Config
-# ----------------------
-export PYENV_ROOT="$HOME/.pyenv"
-export PATH="$PYENV_ROOT/bin:$PATH"
-if command -v pyenv 1>/dev/null 2>&1; then
-  eval "$(pyenv init -)"
-fi
-
 # -----------------------------
 # Bat (better cat)
 # -----------------------------
@@ -73,3 +64,4 @@ alias cd='z'
 
 # Start fast fetch
 fastfetch
+

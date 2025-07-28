@@ -1,21 +1,42 @@
 #!/bin/bash
 
-### Sonokai
-# export BLACK=0xff181819
-# export WHITE=0xffe2e2e3
-# export RED=0xfffc5d7c
-# export GREEN=0xff9ed072
-# export BLUE=0xff76cce0
-# export YELLOW=0xffe7c664
-# export ORANGE=0xfff39660
-# export MAGENTA=0xffb39df3
-# export GREY=0xff7f8490
-# export TRANSPARENT=0x00000000
-# export BG0=0xff2c2e34
-# export BG1=0xff363944
-# export BG2=0xff414550
+export TRANSPARENT=0x00ffffff
 
-### Catppuccin
+# -- Gray Scheme --
+export ITEM_COLOR=0xff000000
+export ACCENT_COLOR=0xffc3c6cb
+
+# -- White Scheme --
+# export ITEM_COLOR=0xff000000
+# export ACCENT_COLOR=0xffffffff
+
+# -- Teal Scheme --
+# export ITEM_COLOR=0xff000000
+# export ACCENT_COLOR=0xff2cf9ed
+
+# -- Purple Scheme --
+# export ITEM_COLOR=0xff000000
+# export ACCENT_COLOR=0xffeb46f9
+
+# -- Red Scheme ---
+# export ITEM_COLOR=0xff000000
+# export ACCENT_COLOR=0xffff2453
+
+# -- Blue Scheme ---
+# export ITEM_COLOR=0xff000000
+# export ACCENT_COLOR=0xff15bdf9
+
+# -- Green Scheme --
+# export ITEM_COLOR=0xff000000
+# export ACCENT_COLOR=0xff1dfca1
+
+# -- Orange Scheme --
+# export ITEM_COLOR=0xffffffff
+# export ACCENT_COLOR=0xfff97716
+
+# -- Yellow Scheme --
+# export ITEM_COLOR=0xff000000
+# export ACCENT_COLOR=0xfff7fc17
 export BLACK=0xff181926
 export WHITE=0xffcad3f5
 export RED=0xffed8796

@@ -1,28 +1,29 @@
-#!/bin/bash
+#!/bin/sh
 
-update() {
-  source "$CONFIG_DIR/icons.sh"
-  INFO="$(/System/Library/PrivateFrameworks/Apple80211.framework/Resources/airport -I | awk -F ' SSID: '  '/ SSID: / {print $2}')"
-  LABEL="$INFO ($(ipconfig getifaddr en0))"
-  ICON="$([ -n "$INFO" ] && echo "$WIFI_CONNECTED" || echo "$WIFI_DISCONNECTED")"
+# Check for wired connection with valid IP (excluding WiFi interfaces)
+# Get WiFi interface name from networksetup
+WIFI_INTERFACE=$(networksetup -listallhardwareports | awk '/Wi-Fi/{getline; print $2}')
 
-  sketchybar --set $NAME icon="$ICON" label="$LABEL"
-}
+WIRED_IP=$(for iface in $(ifconfig -l | tr ' ' '\n' | grep '^en[0-9]'); do
+    # Skip if this is the WiFi interface
+    if [ "$iface" = "$WIFI_INTERFACE" ]; then
+        continue
+    fi
+    # Check for active connection with valid IP
+    ifconfig "$iface" 2>/dev/null | grep 'inet ' | grep -v '127.0.0.1' | head -1 | awk '{print $2}'
+done | head -1)
 
-click() {
-  CURRENT_WIDTH="$(sketchybar --query $NAME | jq -r .label.width)"
+# Check for WiFi connection
+SSID=$(system_profiler SPAirPortDataType | awk '/Current Network Information:/ { getline; print substr($0, 13, (length($0) - 13)); exit }')
 
-  WIDTH=0
-  if [ "$CURRENT_WIDTH" -eq "0" ]; then
-    WIDTH=dynamic
-  fi
-
-  sketchybar --animate sin 20 --set $NAME label.width="$WIDTH"
-}
-
-case "$SENDER" in
-  "wifi_change") update
-  ;;
-  "mouse.clicked") click
-  ;;
-esac
+# Determine connection status and display
+if [ "$WIRED_IP" != "" ]; then
+  # Wired connection is active with valid IP
+  sketchybar --set $NAME icon="􀌗" label="Wired"
+elif [ "$SSID" != "" ]; then
+  # WiFi connection is active
+  sketchybar --set $NAME icon="􀙇" label="$SSID"
+else
+  # No connection
+  sketchybar --set $NAME icon="�" label="Disconnected"
+fi

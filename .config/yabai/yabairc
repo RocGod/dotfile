@@ -53,7 +53,7 @@ yabai -m config                                 \
 
 # Rules
 
-yabai -m rule --add app="^(System Settings|Calculator|Logi Options+|Activity Monitor|Cisco Secure Client|Webex|Webex Meetings|Anypoint Studio$|AnypointStudio|Anypoint Studio Launcher|Find/Replace|Cisco Webex Meetings)$" manage=off grid=1:2:1:0:1:1
+yabai -m rule --add app="^(System Settings|Calculator|Logi Options+|Activity Monitor|Anypoint Studio$|AnypointStudio|Anypoint Studio Launcher|Find/Replace)$" manage=off grid=1:2:1:0:1:1
 
 
 echo "yabai configuration loaded.."

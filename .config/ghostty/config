@@ -4,3 +4,4 @@ font-family= JetBrainsMono Nerd Font
 font-size = 14
 gtk-titlebar = false
 background-opacity = 0.95
+macos-titlebar-style = transparent
