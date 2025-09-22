@@ -14,23 +14,42 @@ return {
     },
   },
   {
+    "b0o/schemastore.nvim",
+    lazy = false
+  },
+  {
     "neovim/nvim-lspconfig",
     lazy = false,
     config = function()
       local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-      local lspconfig = require("lspconfig")
-      lspconfig.tsserver.setup({
-        capabilities = capabilities
+      -- html: disable wrap line
+      vim.lsp.config("html", {
+        settings = {
+          html = {
+            format = {
+              wrapLineLength = 0,
+            },
+          },
+        },
       })
-      lspconfig.solargraph.setup({
-        capabilities = capabilities
+      -- json: validate using schema and pull from schemastore
+      vim.lsp.config("jsonls", {
+        settings = {
+          json = {
+            schemas = require("schemastore").json.schemas(),
+            validate = { enable = true },
+          },
+        },
       })
-      lspconfig.html.setup({
-        capabilities = capabilities
-      })
-      lspconfig.lua_ls.setup({
-        capabilities = capabilities
+      -- lua: recognize "vim" and "mp" global
+      vim.lsp.config("lua_ls", {
+        settings = {
+          Lua = {
+            diagnostics = {
+              globals = { "vim", "mp" },
+            },
+          },
+        },
       })
 
       vim.keymap.set("n", "K", vim.lsp.buf.hover, {})
