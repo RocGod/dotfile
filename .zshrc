@@ -16,8 +16,6 @@ plugins=(
   jenv
   mvn
   nvm
-  thefuck
-  tmux
   uv
   zoxide
   zsh-autosuggestions
@@ -81,6 +79,8 @@ alias mv='mv -i'
 # Fastfetch (system info)
 # ----------------------
 command -v fastfetch &>/dev/null && fastfetch
+
+fpath=($HOME/.zsh-complete $fpath)
 
 # ----------------------
 # End of .zshrc
