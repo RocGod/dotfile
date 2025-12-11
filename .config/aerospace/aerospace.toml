@@ -110,15 +110,16 @@ alt-5 = 'workspace 5'
 alt-6 = 'workspace 6'
 alt-7 = 'workspace 7'
 alt-8 = 'workspace 8'
-alt-9 = 'workspace 9'
+alt-9 = 'workspace 9' 
 alt-b = 'workspace B' # browser
+alt-c = 'workspace C' # coding
 alt-d = 'workspace D' # docs
 alt-e = 'workspace E' # finder
-alt-m = 'workspace M' # music
+alt-m = 'workspace M' # message
 alt-n = 'workspace N' # notes
-alt-p = 'workspace P' # photo editing
 alt-t = 'workspace T' # terminal
-alt-v = 'workspace V' # video editing
+alt-o = 'workspace O' # email
+
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-node-to-workspace
 cmd-ctrl-alt-shift-1 = 'move-node-to-workspace 1'
@@ -137,7 +138,8 @@ cmd-ctrl-alt-shift-m = 'move-node-to-workspace M'
 cmd-ctrl-alt-shift-n = 'move-node-to-workspace N'
 cmd-ctrl-alt-shift-p = 'move-node-to-workspace P'
 cmd-ctrl-alt-shift-t = 'move-node-to-workspace T'
-cmd-ctrl-alt-shift-v = 'move-node-to-workspace V'
+cmd-ctrl-alt-shift-o = 'move-node-to-workspace O'
+
 
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
@@ -185,3 +187,15 @@ run = "move-node-to-workspace T"
 [[on-window-detected]]
 if.app-id = 'com.google.Chrome'
 run = "move-node-to-workspace B"
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.VSCode'
+run = "move-node-to-workspace C"
+
+[[on-window-detected]]
+if.app-id = 'com.tinyspeck.slackmacgap'
+run = "move-node-to-workspace C"
+
+[[on-window-detected]]
+if.app-id = 'com.microsoft.Outlook'
+run = "move-node-to-workspace O"
