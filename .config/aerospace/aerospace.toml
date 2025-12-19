@@ -11,7 +11,7 @@ after-login-command = []
 
 # You can use it to add commands that run after AeroSpace startup.
 # 'after-startup-command' is run after 'after-login-command'
-# Available commands : https://nikitabobko.github.io/AeroSpace/commands
+# Available commands: https://nikitabobko.github.io/AeroSpace/commands
 after-startup-command = []
 
 # Start AeroSpace at login
@@ -132,11 +132,11 @@ cmd-ctrl-alt-shift-7 = 'move-node-to-workspace 7'
 cmd-ctrl-alt-shift-8 = 'move-node-to-workspace 8'
 cmd-ctrl-alt-shift-9 = 'move-node-to-workspace 9'
 cmd-ctrl-alt-shift-b = 'move-node-to-workspace B'
+cmd-ctrl-alt-shift-c = 'move-node-to-workspace C'
 cmd-ctrl-alt-shift-d = 'move-node-to-workspace D'
 cmd-ctrl-alt-shift-e = 'move-node-to-workspace E'
 cmd-ctrl-alt-shift-m = 'move-node-to-workspace M'
 cmd-ctrl-alt-shift-n = 'move-node-to-workspace N'
-cmd-ctrl-alt-shift-p = 'move-node-to-workspace P'
 cmd-ctrl-alt-shift-t = 'move-node-to-workspace T'
 cmd-ctrl-alt-shift-o = 'move-node-to-workspace O'
 
