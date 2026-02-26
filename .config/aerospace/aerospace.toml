@@ -203,3 +203,7 @@ run = "move-node-to-workspace M"
 [[on-window-detected]]
 if.app-id = 'com.microsoft.Outlook'
 run = "move-node-to-workspace O"
+
+[[on-window-detected]]
+if.app-id = 'studio.product'
+run = ['layout floating']
