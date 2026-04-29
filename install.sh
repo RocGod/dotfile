@@ -8,12 +8,16 @@ log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 
 backup_configs() {
     local backup_dir="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
-    log_info "Creating backup directory at $backup_dir"
-    mkdir -p "$backup_dir"
-
     local files=(".zshrc" ".tmux.conf" ".config/nvim" ".config/yabai" ".config/skhd")
+    local created=0
+
     for file in "${files[@]}"; do
         if [ -e "$HOME/$file" ]; then
+            if [ "$created" -eq 0 ]; then
+                log_info "Creating backup directory at $backup_dir"
+                mkdir -p "$backup_dir"
+                created=1
+            fi
             log_info "Backing up $file"
             cp -R "$HOME/$file" "$backup_dir/"
         fi
@@ -21,12 +25,21 @@ backup_configs() {
 }
 
 install_xcode_tools() {
-    if ! xcode-select -p &> /dev/null; then
-        log_info "Installing Xcode Command Line Tools..."
-        xcode-select --install
-        read -p "Press enter after the Xcode Command Line Tools installation completes"
-    else
+    if xcode-select -p &> /dev/null; then
         log_info "Xcode Command Line Tools already installed"
+        return
+    fi
+
+    log_info "Installing Xcode Command Line Tools..."
+    xcode-select --install
+
+    if [ -t 0 ]; then
+        read -r -p "Press enter after the Xcode Command Line Tools installation completes"
+    else
+        log_info "Waiting for Xcode Command Line Tools installation to finish..."
+        until xcode-select -p &> /dev/null; do
+            sleep 5
+        done
     fi
 }
 
@@ -77,6 +90,7 @@ install_packages() {
         fzf
         git
         starship
+        stow
         tmux
         zoxide
         jenv
@@ -100,7 +114,7 @@ setup_dotfiles() {
 
     if [ ! -d "$dotfiles_dir" ]; then
         log_info "Cloning dotfiles repository..."
-        git clone git@github.com:RocGod/dotfile.git "$dotfiles_dir"
+        git clone https://github.com/RocGod/dotfile.git "$dotfiles_dir"
     fi
 
     log_info "Stowing dotfiles..."
@@ -119,7 +133,9 @@ main() {
     setup_dotfiles
 
     log_info "Installation complete! Please restart your terminal."
-    exec zsh
+    if [ -t 1 ]; then
+        exec zsh
+    fi
 }
 
 main

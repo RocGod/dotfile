@@ -22,7 +22,7 @@ This repository contains my personal configuration files and scripts for quickly
 - macOS 13 (Ventura) or later — tested on Apple Silicon
 - Internet connection
 - An Apple ID signed in (required for App Store / Xcode CLT)
-- `git` and `stow` available before running the installer (Xcode CLT provides `git`; `stow` is installed via Homebrew during setup, so the very first run still requires manually running `brew install stow` before the final `stow .` step if you choose to bootstrap manually)
+- Nothing else — the installer handles `git` (via Xcode CLT) and `stow` (via Homebrew) for you
 
 > ⚠️ **Always review remote scripts before piping them to your shell.** Open [`install.sh`](./install.sh) and read it before running the Quick Start command below.
 
