@@ -78,6 +78,15 @@ alias rm='rm -i'
 alias cp='cp -i'
 alias mv='mv -i'
 
+# Homebrew maintenance helper. `brew outdated` can return 1 when nothing is
+# outdated, so avoid short-circuiting before upgrade.
+unalias bubu 2>/dev/null
+function bubu() {
+  brew update || return $?
+  brew outdated || true
+  brew upgrade
+}
+
 # -----------------------------------------------------------------------------
 # Hooks / integrations
 # -----------------------------------------------------------------------------
