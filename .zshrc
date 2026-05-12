@@ -82,7 +82,7 @@ alias mv='mv -i'
 # outdated, so avoid short-circuiting before upgrade.
 unalias bubu 2>/dev/null
 function bubu() {
-  brew update || return $?
+  brew update || true
   brew outdated || true
   brew upgrade
 }
@@ -90,15 +90,6 @@ function bubu() {
 # -----------------------------------------------------------------------------
 # Hooks / integrations
 # -----------------------------------------------------------------------------
-
-# Wrap `brew` so SketchyBar refreshes its package-update indicator after any
-# command that could change the outdated count.
-function brew() {
-  command brew "$@"
-  if [[ $* =~ "upgrade" ]] || [[ $* =~ "update" ]] || [[ $* =~ "outdated" ]]; then
-    command -v sketchybar &>/dev/null && sketchybar --trigger brew_update
-  fi
-}
 
 # Show a system-info banner, but only on login shells (not every new tab).
 if [[ -o login ]] && command -v fastfetch &>/dev/null; then
