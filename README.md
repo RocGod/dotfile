@@ -42,21 +42,32 @@ The `install.sh` script will:
 
 1. Back up existing configs to `~/.dotfiles_backup_<timestamp>`
 2. Install Xcode Command Line Tools and Homebrew
-3. Install Oh My Zsh + plugins (`zsh-autosuggestions`, `zsh-syntax-highlighting`)
+3. Install Oh My Zsh + plugins (`zsh-autosuggestions`, `fast-syntax-highlighting`)
 4. Install all CLI, development, and window-management packages via Homebrew
 5. Clone this repo to `~/dotfile` and symlink everything with `stow`
+6. Create zsh cache directory for completion caching
 
 ---
 
 ## 📦 What's Included
 
-- **Shell & Prompt:** [Oh My Zsh](https://ohmyz.sh/) with `zsh-autosuggestions` and `zsh-syntax-highlighting`, [Starship](https://starship.rs/) prompt, [Nushell](https://www.nushell.sh/) config
-- **CLI Tools:** [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`zoxide`](https://github.com/ajeetdsouza/zoxide), [`fzf`](https://github.com/junegunn/fzf), [`yazi`](https://github.com/sxyazi/yazi), [`fastfetch`](https://github.com/fastfetch-cli/fastfetch), `tmux`
-- **Terminals:** [Ghostty](https://ghostty.org/), [Kitty](https://sw.kovidgoyal.net/kitty/), [WezTerm](https://wezfurlong.org/wezterm/) (`.wezterm.lua`)
-- **Development:** `git` (+ `jgit`), `jenv`, `mvnvm`, `nvm`, `uv`
-- **Window Management & Desktop:** [yabai](https://github.com/koekeishiya/yabai), [skhd](https://github.com/koekeishiya/skhd), [Aerospace](https://github.com/nikitabobko/AeroSpace), [SketchyBar](https://github.com/FelixKratz/SketchyBar), [JankyBorders](https://github.com/FelixKratz/JankyBorders), [LinearMouse](https://linearmouse.app/), [Raycast](https://www.raycast.com/)
-- **Editor:** [Neovim](https://neovim.io/) — custom config in `.config/nvim`
+### Core Tools
+- **Shell & Prompt:** [Oh My Zsh](https://ohmyz.sh/) with `zsh-autosuggestions` and `fast-syntax-highlighting`, [Starship](https://starship.rs/) prompt
+- **CLI Tools:** [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`zoxide`](https://github.com/ajeetdsouza/zoxide), [`fzf`](https://github.com/junegunn/fzf), [`fd`](https://github.com/sharkdp/fd), [`fastfetch`](https://github.com/fastfetch-cli/fastfetch), `tmux`
+- **Development:** `git`, `jenv`, `mvnvm`, [`fnm`](https://github.com/Schniz/fnm) (fast Node version manager), [`uv`](https://github.com/astral-sh/uv) (Python package manager)
+- **Window Management:** [SketchyBar](https://github.com/FelixKratz/SketchyBar), [JankyBorders](https://github.com/FelixKratz/JankyBorders)
 - **Fonts:** JetBrains Mono Nerd Font
+
+### Optional Tools (installed if available)
+- [`trash-cli`](https://github.com/andreafrancia/trash-cli) — safer alternative to `rm`
+- [`ripgrep`](https://github.com/BurntSushi/ripgrep) — faster grep (`rg`)
+- [Neovim](https://neovim.io/) — modern vim editor
+
+### Shell Features
+- **Performance optimizations:** Completion caching, conditional plugin loading, 50K history entries
+- **Enhanced fzf:** Nord color scheme, `fd` integration for faster file searching
+- **Smart navigation:** Auto-pushd with duplicate prevention
+- **Safety features:** Interactive prompts for `rm`/`cp`/`mv`, `trash-cli` integration
 
 ---
 
@@ -73,13 +84,13 @@ A few things `install.sh` cannot automate — handle these after the script fini
    brew services start sketchybar
    brew services start borders
    ```
-4. **Neovim**: open `nvim` and run `:Lazy sync` (or `:checkhealth`) to install plugins.
+4. **Neovim** (if installed): open `nvim` and run `:Lazy sync` or `:checkhealth` to install plugins.
 5. **tmux**: press `prefix + I` to install plugins via TPM if used.
-6. **Raycast**: sign in and import settings if you sync them.
-7. **Set your default shell** to the Homebrew zsh if desired:
+6. **Set your default shell** to the Homebrew zsh if desired:
    ```bash
    chsh -s /opt/homebrew/bin/zsh
    ```
+7. **Verify installation**: Run `source ~/.zshrc` to load the new configuration.
 
 ---
 
@@ -109,45 +120,46 @@ ls ~/.dotfiles_backup_*
 
 ---
 
-## �️ Structure
+## 🗂️ Structure
 
 **Root files**
 
 | Path | Purpose |
 | --- | --- |
-| `.zshrc` | Zsh shell config (Oh My Zsh, plugins, aliases) |
+| `.zshrc` | Zsh shell config with performance optimizations, plugins, and aliases |
 | `.tmux.conf` | tmux key bindings and theme |
-| `.wezterm.lua` | WezTerm terminal config |
 | `.stow-local-ignore` | Files stow should skip when symlinking |
-| `install.sh` | Bootstrap script for a fresh Mac |
+| `install.sh` | Bootstrap script for a fresh Mac (simplified and optimized) |
 
 **`.config/` — grouped by purpose**
 
 | Directory | Purpose |
 | --- | --- |
 | **Shell / prompt** | |
-| `nushell/` | Nushell shell config |
 | `starship.toml` | Starship prompt theme |
-| **Terminals** | |
-| `ghostty/` | Ghostty terminal config |
-| `kitty/` | Kitty terminal config |
-| **Editor** | |
-| `nvim/` | Neovim config (lazy.nvim plugins, LSP, etc.) |
 | **Window management & desktop** | |
 | `yabai/` | yabai tiling WM rules |
 | `skhd/` | skhd hotkey daemon |
-| `aerospace/` | AeroSpace tiling WM (alternative to yabai) |
 | `sketchybar/` | SketchyBar status bar |
 | `borders/` | JankyBorders window-border config |
-| `linearmouse/` | LinearMouse settings |
-| `raycast/` | Raycast launcher settings |
-| **File management** | |
-| `yazi/` | yazi terminal file manager |
-| **Development** | |
-| `jgit/` | Shared git config / hooks |
-| **Misc** | |
-| `configstore/` | App config-store data |
-| `containers/` | Container runtime config |
+
+### Key Configuration Highlights
+
+**`.zshrc` features:**
+- Completion caching for faster tab completion
+- Conditional plugin loading (only loads plugins for installed tools)
+- 50,000 history entries with smart duplicate handling
+- Enhanced fzf with Nord color scheme and `fd` integration
+- Auto-pushd for better directory navigation
+- Safety aliases with `trash-cli` integration
+- Fast Node.js version management with `fnm`
+
+**`install.sh` features:**
+- Automatic backup of existing configs
+- Simplified code with bash best practices
+- Conditional installation of optional packages
+- Automatic removal of conflicting plugins
+- Creates necessary cache directories
 
 ---
 
