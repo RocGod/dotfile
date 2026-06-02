@@ -13,6 +13,19 @@ zstyle ':omz:update' mode auto
 # Suggest corrections for mistyped commands (e.g. `gti` → `git`).
 ENABLE_CORRECTION="true"
 
+# -----------------------------------------------------------------------------
+# Performance flags (set BEFORE sourcing oh-my-zsh.sh)
+# -----------------------------------------------------------------------------
+
+# Skip per-prompt widget rebinding in zsh-autosuggestions.
+ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+
+# Disable URL-quoting magic functions (slow on every keypress).
+DISABLE_MAGIC_FUNCTIONS=true
+
+# Skip insecure-directory checks in compinit (saves a directory scan).
+DISABLE_COMPFIX=true
+
 # Add custom completion directory to fpath so compinit picks it up.
 fpath=($HOME/.zsh-complete $fpath)
 
@@ -24,11 +37,10 @@ plugins=(
   git                       # git aliases and completions
   jenv                      # Java version manager
   mvn                       # Maven completions
-  nvm                       # Node version manager
   uv                        # uv (Python) completions
   zoxide                    # smarter `cd`
   zsh-autosuggestions       # ghost-text suggestions from history
-  zsh-syntax-highlighting   # highlight commands as you type — keep last
+  fast-syntax-highlighting  # highlight commands as you type — keep last
 )
 
 # Source Oh My Zsh if it's installed.
@@ -90,6 +102,11 @@ function bubu() {
 # -----------------------------------------------------------------------------
 # Hooks / integrations
 # -----------------------------------------------------------------------------
+
+# fnm — fast Rust-based Node version manager (replaces nvm, near-instant init).
+if command -v fnm &>/dev/null; then
+  eval "$(fnm env --use-on-cd --shell zsh)"
+fi
 
 # Show a system-info banner, but only on login shells (not every new tab).
 if [[ -o login ]] && command -v fastfetch &>/dev/null; then

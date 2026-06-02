@@ -73,9 +73,9 @@ install_zsh_plugins() {
         git clone https://github.com/zsh-users/zsh-autosuggestions "$plugins_dir/zsh-autosuggestions"
     fi
 
-    if [ ! -d "$plugins_dir/zsh-syntax-highlighting" ]; then
-        log_info "Installing zsh-syntax-highlighting..."
-        git clone https://github.com/zsh-users/zsh-syntax-highlighting.git "$plugins_dir/zsh-syntax-highlighting"
+    if [ ! -d "$plugins_dir/fast-syntax-highlighting" ]; then
+        log_info "Installing fast-syntax-highlighting..."
+        git clone https://github.com/zdharma-continuum/fast-syntax-highlighting.git "$plugins_dir/fast-syntax-highlighting"
     fi
 }
 
@@ -95,10 +95,8 @@ install_packages() {
         zoxide
         jenv
         mvnvm
-        nvm
+        fnm
         uv
-        koekeishiya/formulae/yabai
-        koekeishiya/formulae/skhd
         borders
         sketchybar
         zsh
