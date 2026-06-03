@@ -8,7 +8,7 @@ log_info() { echo -e "${GREEN}[INFO]${NC} $1"; }
 
 backup_configs() {
     local backup_dir="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
-    local files=(".zshrc" ".tmux.conf" ".config/nvim" ".config/yabai" ".config/skhd")
+    local files=(".zshrc" ".tmux.conf" ".config/nvim" ".config/aerospace" ".config/ghostty" ".config/starship.toml" ".config/borders" ".config/sketchybar")
     
     # Check if any files exist before creating backup directory
     local files_exist=false
