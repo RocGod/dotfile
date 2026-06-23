@@ -67,8 +67,7 @@ setopt HIST_IGNORE_ALL_DUPS     # drop older duplicate entries
 setopt HIST_FIND_NO_DUPS        # don't show duplicates when searching
 setopt HIST_EXPIRE_DUPS_FIRST   # expire duplicates first when trimming history
 setopt HIST_REDUCE_BLANKS       # trim superfluous whitespace
-setopt INC_APPEND_HISTORY       # append immediately, not at shell exit
-setopt SHARE_HISTORY            # share history across running shells
+setopt SHARE_HISTORY            # share history across running shells (implies incremental append)
 
 # -----------------------------------------------------------------------------
 # Environment
@@ -78,7 +77,7 @@ export VISUAL="nvim"
 export BAT_THEME=Nord
 
 # Personal binaries take precedence over system ones.
-export PATH="$HOME/bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
 # -----------------------------------------------------------------------------
 # Directory Navigation
@@ -94,6 +93,7 @@ setopt PUSHD_SILENT             # don't print directory stack after pushd/popd
 # Better defaults for common tools.
 alias cat='bat'
 alias cd='z'                                                   # zoxide
+alias ctx='context-mode'                                       # context-mode CLI
 alias fzf="fzf --preview 'bat --color=always --line-range=:500 {}'"
 
 # Enhanced fzf configuration with better defaults.
@@ -146,6 +146,21 @@ function bubu() {
 # fnm — fast Rust-based Node version manager (replaces nvm, near-instant init).
 if command -v fnm &>/dev/null; then
   eval "$(fnm env --use-on-cd --shell zsh)" 2>/dev/null || echo "Warning: fnm initialization failed"
+fi
+
+# OrbStack — needed for non-login shells (most terminal tabs skip ~/.zprofile).
+source ~/.orbstack/shell/init.zsh 2>/dev/null || :
+
+# yazi — terminal file manager wrapper that changes cwd on exit.
+if command -v yazi &>/dev/null; then
+  function y() {
+    local tmp="$(mktemp -t "yazi-cwd")"
+    yazi "$@" --cwd-file="$tmp"
+    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+      cd "$cwd"
+    fi
+    rm -f -- "$tmp"
+  }
 fi
 
 # Show a system-info banner, but only on login shells (not every new tab).
