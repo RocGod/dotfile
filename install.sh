@@ -73,40 +73,51 @@ install_homebrew() {
     fi
 }
 
+# Install a Homebrew package if not already present.
+#   brew_ensure_installed <pkg>            formula
+#   brew_ensure_installed <pkg> --cask     cask
+#   brew_ensure_installed <pkg> --optional formula, tolerate install failure
+brew_ensure_installed() {
+    local pkg="$1" flag="${2:-}"
+    local cask_flag=""; [[ "$flag" == "--cask" ]] && cask_flag="--cask"
+
+    if brew list $cask_flag "$pkg" &>/dev/null; then
+        log_info "$pkg already installed"
+        return
+    fi
+
+    if [[ "$flag" == "--optional" ]]; then
+        brew install "$pkg" || log_info "Skipped $pkg"
+    else
+        brew install $cask_flag "$pkg"
+    fi
+}
+
 install_packages() {
     log_info "Tapping additional Homebrew formulae..."
     brew tap FelixKratz/formulae
 
+    log_info "Installing Homebrew packages..."
     local packages=(
         bat eza fastfetch fd fzf git just starship stow zoxide
         jenv mvnvm fnm uv borders zsh
     )
-
-    log_info "Installing Homebrew packages..."
-    for pkg in "${packages[@]}"; do
-        if brew list "$pkg" &>/dev/null; then
-            log_info "$pkg already installed"
-        else
-            brew install "$pkg"
-        fi
-    done
+    for pkg in "${packages[@]}"; do brew_ensure_installed "$pkg"; done
 
     log_info "Installing cask packages..."
-    if brew list --cask font-jetbrains-mono-nerd-font &>/dev/null; then
-        log_info "font-jetbrains-mono-nerd-font already installed"
-    else
-        brew install --cask font-jetbrains-mono-nerd-font
-    fi
+    local cask_packages=(font-jetbrains-mono-nerd-font)
+    for pkg in "${cask_packages[@]}"; do brew_ensure_installed "$pkg" --cask; done
 
     log_info "Installing optional packages..."
     local optional_packages=(trash-cli ripgrep neovim)
-    for pkg in "${optional_packages[@]}"; do
-        if brew list "$pkg" &>/dev/null; then
-            log_info "$pkg already installed"
-        else
-            brew install "$pkg" || log_info "Skipped $pkg"
-        fi
-    done
+    for pkg in "${optional_packages[@]}"; do brew_ensure_installed "$pkg" --optional; done
+
+    # trash-cli is keg-only (macOS ships its own `trash` binary), so
+    # `trash-put` won't be on PATH unless we link it — required for the
+    # `trash` alias in .zshrc to activate.
+    if brew list trash-cli &>/dev/null; then
+        brew link --force trash-cli &>/dev/null || log_info "trash-cli already linked"
+    fi
 }
 
 install_zsh_plugins() {
@@ -178,4 +189,9 @@ main() {
     fi
 }
 
-main
+# Skip running the full installer when this file is sourced for a single
+# function (used by `justfile` recipes and test_install.sh). The curl-pipe
+# quick start (`bash -c "$(curl ...)"`) never sets this, so it still runs main.
+if [[ "${INSTALL_SH_NO_MAIN:-0}" != "1" ]]; then
+    main
+fi
