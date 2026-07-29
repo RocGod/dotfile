@@ -12,7 +12,6 @@ This repository contains my personal configuration files and scripts for quickly
 - [Post-Install Manual Steps](#-post-install-manual-steps)
 - [Updating & Uninstalling](#-updating--uninstalling)
 - [Structure](#%EF%B8%8F-structure)
-- [Acknowledgements](#-acknowledgements)
 - [License](#-license)
 
 ---
@@ -47,15 +46,17 @@ The `install.sh` script will:
 5. Clone this repo to `~/dotfile` and symlink everything with `stow`
 6. Create zsh cache directory for completion caching
 
+If you already have the repo cloned and `just` installed, you can run the equivalent steps as recipes instead: `just install` (or individually: `just backup`, `just xcode`, `just homebrew`, `just packages`, `just zsh-plugins`, `just dotfiles`). Run `just` with no arguments to list all recipes.
+
 ---
 
 ## 📦 What's Included
 
 ### Core Tools
 - **Shell & Prompt:** [Oh My Zsh](https://ohmyz.sh/) with `zsh-autosuggestions` and `fast-syntax-highlighting`, [Starship](https://starship.rs/) prompt
-- **CLI Tools:** [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`zoxide`](https://github.com/ajeetdsouza/zoxide), [`fzf`](https://github.com/junegunn/fzf), [`fd`](https://github.com/sharkdp/fd), [`fastfetch`](https://github.com/fastfetch-cli/fastfetch), `tmux`
-- **Development:** `git`, `jenv`, `mvnvm`, [`fnm`](https://github.com/Schniz/fnm) (fast Node version manager), [`uv`](https://github.com/astral-sh/uv) (Python package manager)
-- **Window Management:** [SketchyBar](https://github.com/FelixKratz/SketchyBar), [JankyBorders](https://github.com/FelixKratz/JankyBorders)
+- **CLI Tools:** [`bat`](https://github.com/sharkdp/bat), [`eza`](https://github.com/eza-community/eza), [`zoxide`](https://github.com/ajeetdsouza/zoxide), [`fzf`](https://github.com/junegunn/fzf), [`fd`](https://github.com/sharkdp/fd), [`fastfetch`](https://github.com/fastfetch-cli/fastfetch)
+- **Development:** `git`, [`just`](https://github.com/casey/just) (task runner), `jenv`, `mvnvm`, [`fnm`](https://github.com/Schniz/fnm) (fast Node version manager), [`uv`](https://github.com/astral-sh/uv) (Python package manager)
+- **Window Management:** [AeroSpace](https://github.com/nikitabobko/AeroSpace) (tiling window manager), [JankyBorders](https://github.com/FelixKratz/JankyBorders)
 - **Fonts:** JetBrains Mono Nerd Font
 
 ### Optional Tools (installed if available)
@@ -75,22 +76,18 @@ The `install.sh` script will:
 
 A few things `install.sh` cannot automate — handle these after the script finishes:
 
-1. **Grant accessibility permissions** to `yabai`, `skhd`, and Raycast in *System Settings → Privacy & Security → Accessibility*.
-2. **Disable SIP partially** if you want yabai's scripting addition (see the [yabai wiki](https://github.com/koekeishiya/yabai/wiki/Disabling-System-Integrity-Protection)).
-3. **Start the services**:
+1. **Grant accessibility permissions** to AeroSpace and Raycast in *System Settings → Privacy & Security → Accessibility*.
+2. **Start AeroSpace and borders**:
    ```bash
-   yabai --start-service
-   skhd  --start-service
-   brew services start sketchybar
+   open -a AeroSpace
    brew services start borders
    ```
-4. **Neovim** (if installed): open `nvim` and run `:Lazy sync` or `:checkhealth` to install plugins.
-5. **tmux**: press `prefix + I` to install plugins via TPM if used.
-6. **Set your default shell** to the Homebrew zsh if desired:
+3. **Neovim** (if installed): open `nvim` and run `:Lazy sync` or `:checkhealth` to install plugins.
+4. **Set your default shell** to the Homebrew zsh if desired:
    ```bash
    chsh -s /opt/homebrew/bin/zsh
    ```
-7. **Verify installation**: Run `source ~/.zshrc` to load the new configuration.
+5. **Verify installation**: Run `source ~/.zshrc` to load the new configuration.
 
 ---
 
@@ -101,7 +98,14 @@ Pull the latest configs and re-link:
 ```bash
 cd ~/dotfile
 git pull
-stow --restow .
+stow --restow .   # or: just restow
+```
+
+Preview what stow would change before applying, without touching anything:
+
+```bash
+cd ~/dotfile
+stow --simulate --verbose .   # or: just stow-dry
 ```
 
 Remove all symlinks created by stow:
@@ -127,9 +131,10 @@ ls ~/.dotfiles_backup_*
 | Path | Purpose |
 | --- | --- |
 | `.zshrc` | Zsh shell config with performance optimizations, plugins, and aliases |
-| `.tmux.conf` | tmux key bindings and theme |
 | `.stow-local-ignore` | Files stow should skip when symlinking |
 | `install.sh` | Bootstrap script for a fresh Mac (simplified and optimized) |
+| `justfile` | Same setup steps as `install.sh`, exposed as `just` recipes, plus maintenance recipes (`update`, `restow`, `stow-dry`) |
+| `test_install.sh` | Unit tests for the functions in `install.sh` (mocks `brew`/`git`/`stow`/`xcode-select`) |
 
 **`.config/` — grouped by purpose**
 
@@ -138,10 +143,15 @@ ls ~/.dotfiles_backup_*
 | **Shell / prompt** | |
 | `starship.toml` | Starship prompt theme |
 | **Window management & desktop** | |
-| `yabai/` | yabai tiling WM rules |
-| `skhd/` | skhd hotkey daemon |
-| `sketchybar/` | SketchyBar status bar |
+| `aerospace/` | AeroSpace tiling window manager config |
 | `borders/` | JankyBorders window-border config |
+| **Terminal / editor** | |
+| `ghostty/` | Ghostty terminal config (theme, font, shell integration) |
+| `nvim/` | Neovim config (Lua, plugin lockfile) |
+| **Tools & integrations** | |
+| `linearmouse/` | Mouse/trackpad scrolling and pointer settings |
+| `raycast/` | Raycast AI and extension settings |
+| `containers/` | Podman connection config |
 
 ### Key Configuration Highlights
 
@@ -160,13 +170,7 @@ ls ~/.dotfiles_backup_*
 - Conditional installation of optional packages
 - Automatic removal of conflicting plugins
 - Creates necessary cache directories
-
----
-
-## 🙏 Acknowledgements
-
-- **yabai & skhd** — see the [yabai](https://github.com/koekeishiya/yabai) and [skhd](https://github.com/koekeishiya/skhd) docs for setup and required permissions. My config is based on [this tutorial](https://www.josean.com/posts/yabai-setup) by [@josean-dev](https://github.com/josean-dev).
-- **SketchyBar & JankyBorders** — see [SketchyBar](https://github.com/FelixKratz/SketchyBar) and [JankyBorders](https://github.com/FelixKratz/JankyBorders). My sketchybar config is inspired by [@FelixKratz](https://github.com/FelixKratz) and [@hbthen3rd](https://github.com/hbthen3rd).
+- Covered by `test_install.sh` — run `bash test_install.sh` to verify changes before pushing
 
 ---
 

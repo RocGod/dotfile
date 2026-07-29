@@ -151,19 +151,12 @@ fi
 # OrbStack — needed for non-login shells (most terminal tabs skip ~/.zprofile).
 source ~/.orbstack/shell/init.zsh 2>/dev/null || :
 
-# yazi — terminal file manager wrapper that changes cwd on exit.
-if command -v yazi &>/dev/null; then
-  function y() {
-    local tmp="$(mktemp -t "yazi-cwd")"
-    yazi "$@" --cwd-file="$tmp"
-    if cwd="$(cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-      cd "$cwd"
-    fi
-    rm -f -- "$tmp"
-  }
-fi
-
 # Show a system-info banner, but only on login shells (not every new tab).
 if [[ -o login ]] && command -v fastfetch &>/dev/null; then
   fastfetch
+fi
+
+# direnv: auto-load per-directory env vars (used by ac-eip-api-pss-ndc-airshopping/.envrc)
+if command -v direnv &>/dev/null; then
+  eval "$(direnv hook zsh)"
 fi

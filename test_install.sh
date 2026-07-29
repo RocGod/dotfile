@@ -52,11 +52,12 @@ trap cleanup EXIT
 
 # ── Source helper: loads install.sh into current shell with:
 #    • trap ERR disabled (we check return values explicitly in tests)
-#    • `main` no-op'd so the trailing call doesn't run
+#    • INSTALL_SH_NO_MAIN=1 so install.sh's own guard skips the trailing
+#      `main` call — same mechanism justfile recipes use to source one function
 # ─────────────────────────────────────────────────────────────────────────────
+export INSTALL_SH_NO_MAIN=1
 SOURCE_SCRIPT="$(sed \
     -e 's/^trap .*/: # trap disabled in tests/' \
-    -e 's/^main$/: # main disabled in tests/' \
     install.sh)"
 
 # ── Fake PATH: bin/ directory with stub executables ───────────────────────────
