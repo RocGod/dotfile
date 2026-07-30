@@ -67,6 +67,8 @@ setopt HIST_IGNORE_ALL_DUPS     # drop older duplicate entries
 setopt HIST_FIND_NO_DUPS        # don't show duplicates when searching
 setopt HIST_EXPIRE_DUPS_FIRST   # expire duplicates first when trimming history
 setopt HIST_REDUCE_BLANKS       # trim superfluous whitespace
+setopt HIST_IGNORE_SPACE        # don't record commands prefixed with a space
+setopt EXTENDED_HISTORY         # store a timestamp with each history entry
 setopt SHARE_HISTORY            # share history across running shells (implies incremental append)
 
 # -----------------------------------------------------------------------------
@@ -132,7 +134,6 @@ fi
 
 # Homebrew maintenance helper. `brew outdated` can return 1 when nothing is
 # outdated, so avoid short-circuiting before upgrade.
-unalias bubu 2>/dev/null
 function bubu() {
   brew update || true
   brew outdated || true

@@ -65,6 +65,11 @@ outer.bottom =     18
 outer.top =        18
 outer.right =      18
 
+# Pin workspaces to specific monitors.
+# See: https://nikitabobko.github.io/AeroSpace/guide#assign-workspaces-to-monitors
+[workspace-to-monitor-force-assignment]
+T = 2
+
 # 'main' binding mode declaration
 # See: https://nikitabobko.github.io/AeroSpace/guide#binding-modes
 # 'main' binding mode must be always presented
@@ -208,6 +213,14 @@ run = "move-node-to-workspace M"
 [[on-window-detected]]
 if.app-id = 'com.microsoft.Outlook'
 run = "move-node-to-workspace O"
+
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = "move-node-to-workspace E"
+
+[[on-window-detected]]
+if.app-id = 'md.obsidian'
+run = "move-node-to-workspace N"
 
 [[on-window-detected]]
 if.app-id = 'studio.product'
