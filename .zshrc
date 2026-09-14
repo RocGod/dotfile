@@ -42,12 +42,13 @@ plugins=(
   uv                        # uv (Python) completions
   zoxide                    # smarter `cd`
   zsh-autosuggestions       # ghost-text suggestions from history
+  direnv                    # auto-load per-directory env vars from .envrc
+  sdk                       # sdkman tab-completion
   fast-syntax-highlighting  # highlight commands as you type — keep last
 )
 
 # Conditionally add plugins only if their tools are installed.
 command -v brew &>/dev/null && plugins+=(brew)
-command -v jenv &>/dev/null && plugins+=(jenv)
 command -v mvn &>/dev/null && plugins+=(mvn)
 
 # Source Oh My Zsh if it's installed.
@@ -80,6 +81,10 @@ export BAT_THEME=Nord
 
 # Personal binaries take precedence over system ones.
 export PATH="$HOME/.local/bin:$PATH"
+
+# Bun (used for ccstatusline, etc.)
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$PATH"
 
 # -----------------------------------------------------------------------------
 # Directory Navigation
@@ -157,7 +162,6 @@ if [[ -o login ]] && command -v fastfetch &>/dev/null; then
   fastfetch
 fi
 
-# direnv: auto-load per-directory env vars (used by ac-eip-api-pss-ndc-airshopping/.envrc)
-if command -v direnv &>/dev/null; then
-  eval "$(direnv hook zsh)"
-fi
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
