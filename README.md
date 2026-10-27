@@ -62,7 +62,6 @@ If you already have the repo cloned and `just` installed, you can run the equiva
 ### Optional Tools (installed if available)
 - [`trash-cli`](https://github.com/andreafrancia/trash-cli) — safer alternative to `rm`
 - [`ripgrep`](https://github.com/BurntSushi/ripgrep) — faster grep (`rg`)
-- [Neovim](https://neovim.io/) — modern vim editor
 
 ### Shell Features
 - **Performance optimizations:** Completion caching, conditional plugin loading, 50K history entries
@@ -82,8 +81,7 @@ A few things `install.sh` cannot automate — handle these after the script fini
    open -a AeroSpace
    brew services start borders
    ```
-3. **Neovim** (if installed): open `nvim` and run `:Lazy sync` or `:checkhealth` to install plugins.
-4. **Set your default shell** to the Homebrew zsh if desired:
+3. **Set your default shell** to the Homebrew zsh if desired:
    ```bash
    chsh -s /opt/homebrew/bin/zsh
    ```
@@ -147,7 +145,6 @@ ls ~/.dotfiles_backup_*
 | `borders/` | JankyBorders window-border config |
 | **Terminal / editor** | |
 | `ghostty/` | Ghostty terminal config (theme, font, shell integration) |
-| `nvim/` | Neovim config (Lua, plugin lockfile) |
 | **Tools & integrations** | |
 | `linearmouse/` | Mouse/trackpad scrolling and pointer settings |
 | `raycast/` | Raycast AI and extension settings |

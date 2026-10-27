@@ -11,7 +11,6 @@ backup_configs() {
     local backup_dir="$HOME/.dotfiles_backup_$(date +%Y%m%d_%H%M%S)"
     local files=(
         ".zshrc"
-        ".config/nvim"
         ".config/aerospace"
         ".config/ghostty"
         ".config/starship.toml"
@@ -109,7 +108,7 @@ install_packages() {
     for pkg in "${cask_packages[@]}"; do brew_ensure_installed "$pkg" --cask; done
 
     log_info "Installing optional packages..."
-    local optional_packages=(trash-cli ripgrep neovim)
+    local optional_packages=(trash-cli ripgrep)
     for pkg in "${optional_packages[@]}"; do brew_ensure_installed "$pkg" --optional; done
 
     # trash-cli is keg-only (macOS ships its own `trash` binary), so

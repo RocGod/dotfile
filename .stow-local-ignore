@@ -24,3 +24,10 @@ _darcs
 
 .DS_Store
 install.sh
+CLAUDE.md
+justfile
+test_install.sh
+\.stow-local-ignore
+\.vscode
+\.claude
+\.ac-index.*

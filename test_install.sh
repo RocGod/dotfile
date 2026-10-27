@@ -146,14 +146,14 @@ echo "── backup_configs ─────────────────�
     assert_file_exists ".zshrc exists → file copied to backup" "$bdir/.zshrc"
 )
 
-# Case 3: .config/nvim exists → dir recursively copied
+# Case 3: .config/aerospace exists → dir recursively copied
 (
     H="$(mktemp -d)"; trap "rm -rf $H" EXIT; export HOME="$H"
-    mkdir -p "$H/.config/nvim"
+    mkdir -p "$H/.config/aerospace"
     eval "$SOURCE_SCRIPT"
     backup_configs
     bdir=$(find "$H" -name ".dotfiles_backup_*" -maxdepth 1 -type d | head -1)
-    assert_dir_exists ".config/nvim → backed up recursively" "$bdir/nvim"
+    assert_dir_exists ".config/aerospace → backed up recursively" "$bdir/aerospace"
 )
 
 # Case 4: multiple files → all backed up

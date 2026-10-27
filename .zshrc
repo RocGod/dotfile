@@ -4,6 +4,53 @@
 # =============================================================================
 
 # -----------------------------------------------------------------------------
+# Environment & PATH (set early so tools & plugins are available)
+# -----------------------------------------------------------------------------
+export EDITOR="vim"
+export VISUAL="vim"
+export BAT_THEME=Nord
+export HOMEBREW_NO_UPGRADE_AUTO_UPDATES_CASKS=1
+
+# Zerobrew setup
+export ZEROBREW_ROOT='/opt/zerobrew'
+export ZEROBREW_PREFIX='/opt/zerobrew'
+export PKG_CONFIG_PATH="$ZEROBREW_PREFIX/lib/pkgconfig:${PKG_CONFIG_PATH:-}"
+
+# SSL/TLS certificates (only if ca-certificates is installed)
+if [ -z "${CURL_CA_BUNDLE:-}" ] || [ -z "${SSL_CERT_FILE:-}" ]; then
+  if [ -f "$ZEROBREW_PREFIX/opt/ca-certificates/share/ca-certificates/cacert.pem" ]; then
+    [ -z "${CURL_CA_BUNDLE:-}" ] && export CURL_CA_BUNDLE="$ZEROBREW_PREFIX/opt/ca-certificates/share/ca-certificates/cacert.pem"
+    [ -z "${SSL_CERT_FILE:-}" ] && export SSL_CERT_FILE="$ZEROBREW_PREFIX/opt/ca-certificates/share/ca-certificates/cacert.pem"
+  elif [ -f "$ZEROBREW_PREFIX/etc/ca-certificates/cacert.pem" ]; then
+    [ -z "${CURL_CA_BUNDLE:-}" ] && export CURL_CA_BUNDLE="$ZEROBREW_PREFIX/etc/ca-certificates/cacert.pem"
+    [ -z "${SSL_CERT_FILE:-}" ] && export SSL_CERT_FILE="$ZEROBREW_PREFIX/etc/ca-certificates/cacert.pem"
+  elif [ -f "$ZEROBREW_PREFIX/etc/openssl/cert.pem" ]; then
+    [ -z "${CURL_CA_BUNDLE:-}" ] && export CURL_CA_BUNDLE="$ZEROBREW_PREFIX/etc/openssl/cert.pem"
+    [ -z "${SSL_CERT_FILE:-}" ] && export SSL_CERT_FILE="$ZEROBREW_PREFIX/etc/openssl/cert.pem"
+  elif [ -f "$ZEROBREW_PREFIX/share/ca-certificates/cacert.pem" ]; then
+    [ -z "${CURL_CA_BUNDLE:-}" ] && export CURL_CA_BUNDLE="$ZEROBREW_PREFIX/share/ca-certificates/cacert.pem"
+    [ -z "${SSL_CERT_FILE:-}" ] && export SSL_CERT_FILE="$ZEROBREW_PREFIX/share/ca-certificates/cacert.pem"
+  fi
+fi
+
+if [ -z "${SSL_CERT_DIR:-}" ]; then
+  if [ -d "$ZEROBREW_PREFIX/etc/ca-certificates" ]; then
+    export SSL_CERT_DIR="$ZEROBREW_PREFIX/etc/ca-certificates"
+  elif [ -d "$ZEROBREW_PREFIX/etc/openssl/certs" ]; then
+    export SSL_CERT_DIR="$ZEROBREW_PREFIX/etc/openssl/certs"
+  elif [ -d "$ZEROBREW_PREFIX/share/ca-certificates" ]; then
+    export SSL_CERT_DIR="$ZEROBREW_PREFIX/share/ca-certificates"
+  fi
+fi
+
+# Bun
+export BUN_INSTALL="$HOME/.bun"
+
+# Ensure binaries take precedence: Local > Bun > Zerobrew > Homebrew > System
+export PATH="$HOME/.local/bin:$BUN_INSTALL/bin:$ZEROBREW_PREFIX/bin:$ZEROBREW_PREFIX/sbin:/opt/homebrew/bin:/opt/homebrew/sbin:$PATH"
+typeset -U path PATH
+
+# -----------------------------------------------------------------------------
 # Oh My Zsh framework settings (must be set BEFORE sourcing oh-my-zsh.sh)
 # -----------------------------------------------------------------------------
 
@@ -30,8 +77,14 @@ DISABLE_COMPFIX=true
 zstyle ':completion:*' use-cache on
 zstyle ':completion:*' cache-path ~/.zsh/cache
 
-# Add custom completion directory to fpath so compinit picks it up.
-fpath=($HOME/.zsh-complete $fpath)
+# Add completion directories to fpath so compinit picks them up.
+fpath=(
+  $HOME/.zsh-complete
+  /opt/zerobrew/share/zsh/site-functions
+  /opt/homebrew/share/zsh/site-functions
+  $fpath
+)
+typeset -U fpath
 
 # Plugins to load. Order matters: syntax highlighting MUST be last.
 # Only load plugins for tools that are actually installed.
@@ -72,19 +125,6 @@ setopt HIST_IGNORE_SPACE        # don't record commands prefixed with a space
 setopt EXTENDED_HISTORY         # store a timestamp with each history entry
 setopt SHARE_HISTORY            # share history across running shells (implies incremental append)
 
-# -----------------------------------------------------------------------------
-# Environment
-# -----------------------------------------------------------------------------
-export EDITOR="nvim"
-export VISUAL="nvim"
-export BAT_THEME=Nord
-
-# Personal binaries take precedence over system ones.
-export PATH="$HOME/.local/bin:$PATH"
-
-# Bun (used for ccstatusline, etc.)
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$PATH"
 
 # -----------------------------------------------------------------------------
 # Directory Navigation
@@ -137,12 +177,18 @@ if command -v trash-put &>/dev/null; then
   alias trash='trash-put'
 fi
 
-# Homebrew maintenance helper. `brew outdated` can return 1 when nothing is
-# outdated, so avoid short-circuiting before upgrade.
+# Package maintenance helper (updates Zerobrew and Homebrew).
 function bubu() {
-  brew update || true
-  brew outdated || true
-  brew upgrade
+  if command -v zb &>/dev/null; then
+    zb update || true
+    zb outdated || true
+    zb upgrade
+  fi
+  if command -v brew &>/dev/null; then
+    brew update || true
+    brew outdated --formula || true
+    brew upgrade --formula
+  fi
 }
 
 # -----------------------------------------------------------------------------
@@ -165,3 +211,9 @@ fi
 #THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
 export SDKMAN_DIR="$HOME/.sdkman"
 [[ -s "$HOME/.sdkman/bin/sdkman-init.sh" ]] && source "$HOME/.sdkman/bin/sdkman-init.sh"
+
+# >>> adp >>>
+# Written by `adp setup`; this block is replaced on every run. Edit outside it.
+case "$PATH:" in "$HOME/.local/bin:"*) ;; *) export PATH="$HOME/.local/bin:$PATH" ;; esac
+alias adp-claude='adp start'
+# <<< adp <<<

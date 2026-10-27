@@ -55,7 +55,7 @@ dotfiles: (_run-step "setup_dotfiles")
 # Update Homebrew packages
 update:
     brew update
-    brew upgrade
+    brew upgrade --formula
     brew cleanup
 
 # Re-stow dotfiles after changes
