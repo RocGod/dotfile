@@ -178,6 +178,7 @@ if command -v trash-put &>/dev/null; then
 fi
 
 # Package maintenance helper (updates Zerobrew and Homebrew).
+unalias bubu 2>/dev/null  # Oh My Zsh brew plugin aliases bubu, which would shadow this function
 function bubu() {
   if command -v zb &>/dev/null; then
     zb update || true
